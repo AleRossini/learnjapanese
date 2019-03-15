@@ -1,24 +1,49 @@
-App {
+.flex {
   display: flex;
 }
 
-section {
-    background-color: yellow;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.wrap {
+  flex-wrap: wrap;
 }
+
+.no-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.fa-spin {
+  z-index: 1;
+  position: absolute;
+  top: 40%;
+  left: 47%;
+  font-size: xx-large;
+    color: darkgray;
+}
+
+section { 
+    position: relative; 
+}
+
 
 .loader {
   width: 200px;
-  height: 200px;
-  background-image: url("https://intelligencedespatrimoines.fr/ipat2/wp-content/plugins/gallery-by-supsystic/src/GridGallery/Galleries/assets/img/loading.gif");
-  background-repeat: no-repeat;
-  background-position: center center;
+  height: 200px;  
   border: 15px solid tomato;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+  z-index: 2;
 }
 
 .gameImg {
@@ -28,4 +53,5 @@ section {
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+  
 }

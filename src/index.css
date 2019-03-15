@@ -14,6 +14,12 @@ header, footer {
   display: flex;
 }
 
+button {
+  background-color: tomato;
+  border: none;
+  cursor: pointer;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
