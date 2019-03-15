@@ -55,9 +55,11 @@ class App extends React.Component {
   }
 
   handleData(data) {
+    var media = data.data.Media;
     var title = data.data.Media.title.native;
     var img = data.data.Media.coverImage.large;
-    if (title === null) {
+    console.log(media);
+    if (title === null || media === null) {
       this.nextTitle()
     }
     const newStyle = {
@@ -67,6 +69,15 @@ class App extends React.Component {
       title: title,
       image: newStyle
     })
+
+    // Making sure the titles are not fully English
+
+    var regexEnglish = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
+    var regexMixed = /[\uFF00-\uFFEF]/g;
+
+    if(regexEnglish.test(title) || regexMixed.test(title)) {
+      this.nextTitle()
+    }
   }
 
   handleError(error) {
@@ -90,10 +101,12 @@ compareTitles =(e) => {
     })
     var inputValue = this.state.inputValue;
     var titleNative = this.state.title;
-    console.log(inputValue)
-    console.log(titleNative)
     if (inputValue === titleNative) {
       console.log("you guessed it")
+      this.setState({
+        inputValue: ''
+      })
+      setTimeout(this.nextTitle(), 6000);      
     } else {
       console.log("you wrote it wrong")
     }
