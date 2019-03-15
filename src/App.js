@@ -58,8 +58,10 @@ class App extends React.Component {
     var media = data.data.Media;
     var title = data.data.Media.title.native;
     var img = data.data.Media.coverImage.large;
+    var isAdult = data.data.Media.isAdult;
     console.log(media);
-    if (title === null || media === null) {
+    console.log(isAdult);
+    if (title === null || media === null || isAdult) {
       this.nextTitle()
     }
     const newStyle = {
@@ -70,12 +72,11 @@ class App extends React.Component {
       image: newStyle
     })
 
-    // Making sure the titles are not fully English
+// Making sure the titles are not fully English
 
-    var regexEnglish = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
-    var regexMixed = /[\uFF00-\uFFEF]/g;
+    var fullEng = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
 
-    if(regexEnglish.test(title) || regexMixed.test(title)) {
+    if(fullEng.test(title)) {
       this.nextTitle()
     }
   }
@@ -99,14 +100,14 @@ compareTitles =(e) => {
     this.setState({
       inputValue: this.state.inputValue
     })
-    var inputValue = this.state.inputValue;
-    var titleNative = this.state.title;
+    const inputValue = this.state.inputValue;
+    const titleNative = this.state.title;
     if (inputValue === titleNative) {
       console.log("you guessed it")
       this.setState({
         inputValue: ''
       })
-      setTimeout(this.nextTitle(), 6000);      
+      setTimeout(this.nextTitle(), 10000);      
     } else {
       console.log("you wrote it wrong")
     }

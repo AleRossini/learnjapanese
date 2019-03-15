@@ -7,7 +7,11 @@ import * as serviceWorker from './serviceWorker';
 class Header extends React.Component {
   render() {
     return (
-        <header>ANIME learning</header>
+        <header>
+          <h1>Learn Japanese with Anime</h1>
+          <a href="https://www.tofugu.com/japanese/how-to-install-japanese-keyboard/" target="blank">Install Japanese keyboard</a>
+        </header>
+        
     )
   }
 }

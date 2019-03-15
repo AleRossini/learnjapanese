@@ -13,6 +13,7 @@ query ($id: Int) {
       medium
       color
     }
+    isAdult
   }
 }
 `;
