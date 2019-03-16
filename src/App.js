@@ -2,6 +2,7 @@ import React, {
   Component
 } from 'react';
 // import logo from './logo.svg';
+import './index.css';
 import './App.css';
 import {
   query
@@ -12,8 +13,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       title: '',
+      titleRomaji: '',
       image: {},
       inputValue: '',
+      open: false,
       hasError: false
     }
     this.nextTitle = this.nextTitle.bind(this)
@@ -31,6 +34,9 @@ class App extends React.Component {
     var variables = {
       id: Math.floor(Math.random() * 9000) + 1
     };
+    this.setState({
+      open: false
+    });
     var url = 'https://graphql.anilist.co',
       options = {
         method: 'POST',
@@ -57,11 +63,14 @@ class App extends React.Component {
   handleData(data) {
     var media = data.data.Media;
     var title = data.data.Media.title.native;
+    var titleRomaji = data.data.Media.title.romaji;
     var img = data.data.Media.coverImage.large;
     var isAdult = data.data.Media.isAdult;
+    var fullEng = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
+
     console.log(media);
-    console.log(isAdult);
-    if (title === null || media === null || isAdult) {
+
+    if (title === null || media === null || isAdult || fullEng.test(title)) {
       this.nextTitle()
     }
     const newStyle = {
@@ -69,16 +78,9 @@ class App extends React.Component {
     };
     this.setState({
       title: title,
-      image: newStyle
+      image: newStyle,
+      titleRomaji : titleRomaji
     })
-
-// Making sure the titles are not fully English
-
-    var fullEng = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
-
-    if(fullEng.test(title)) {
-      this.nextTitle()
-    }
   }
 
   handleError(error) {
@@ -113,13 +115,21 @@ compareTitles =(e) => {
     }
 }
 
+toggle() {
+  this.setState({
+    open: !this.state.open
+  });
+}
+
   render() {
-    const {image,title} = this.state;
+    const {image,title,titleRomaji,open} = this.state;
+    console.log(open)
+    console.log(title)
     return ( 
-    <section class="flex flex-column align-center">
+    <section class="flex flex-column align-center justify-center">
         <form >
-        <input type = "radio" name = "Anime" value = "Anime" /> Anime 
-        <input type = "radio" name = "Manga" value = "Manga" /> Manga 
+          <input type = "radio" name = "Anime" value = "Anime" /> Anime 
+          <input type = "radio" name = "Manga" value = "Manga" /> Manga 
         </form>  
         <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
         <div class="flex flex-row align-center">
@@ -136,9 +146,15 @@ compareTitles =(e) => {
         <form class="flex flex-row">
             <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
             <button onClick={(e) => this.compareTitles(e)}>Check</button>
-        </form>
-                
-        <div> {title} </div>
+        </form>        
+        <div>
+        <button onClick={this.toggle.bind(this)} >
+          Need help?
+        </button>
+          <div className={"collapse" + (this.state.open ? ' in' : '')}>
+          The title in romaji is: {titleRomaji}
+          </div>
+        </div>
     </section>
     )
   }

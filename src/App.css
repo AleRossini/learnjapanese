@@ -1,25 +1,5 @@
-.flex {
-  display: flex;
-}
-
-.wrap {
-  flex-wrap: wrap;
-}
-
-.no-wrap {
-  flex-wrap: wrap;
-}
-
-.flex-row {
-  flex-direction: row;
-}
-
-.flex-column {
-  flex-direction: column;
-}
-
-.align-center {
-  align-items: center;
+App {
+  height: 1000px;
 }
 
 .fa-spin {
@@ -32,7 +12,8 @@
 }
 
 section { 
-    position: relative; 
+    position: relative;
+    min-height: 400px;
 }
 
 
@@ -54,4 +35,12 @@ section {
   -moz-border-radius: 50%;
   border-radius: 50%;
   
+}
+
+.collapse {
+  visibility: hidden;
+}
+
+.collapse.in {
+  visibility: visible;
 }

@@ -7,9 +7,11 @@ import * as serviceWorker from './serviceWorker';
 class Header extends React.Component {
   render() {
     return (
-        <header>
-          <h1>Learn Japanese with Anime</h1>
-          <a href="https://www.tofugu.com/japanese/how-to-install-japanese-keyboard/" target="blank">Install Japanese keyboard</a>
+        <header class="flex justify-center">
+          <div class="flex flex-row max960">
+            <h1>Learn Japanese with Anime</h1>
+            <a href="https://www.tofugu.com/japanese/how-to-install-japanese-keyboard/" target="blank">Install Japanese keyboard</a>
+          </div>          
         </header>
         
     )
@@ -19,7 +21,11 @@ class Header extends React.Component {
 class Footer extends React.Component {
   render() {
     return (
-    <footer>I'm a footer</footer>
+    <footer class="flex justify-center">
+      <div class="flex flex-row max960">
+      <h6>I'm a footer</h6>
+      </div>      
+    </footer>
     )
   }
 }

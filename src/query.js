@@ -14,6 +14,8 @@ query ($id: Int) {
       color
     }
     isAdult
+    type
+    format
   }
 }
 `;
