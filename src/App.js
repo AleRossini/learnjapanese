@@ -25,7 +25,7 @@ class App extends React.Component {
     this.nextTitle = this.nextTitle.bind(this)
     this.handleResponse = this.handleResponse.bind(this)
     this.handleData = this.handleData.bind(this)
-    this.handleError = this.handleError.bind(this)
+    this.retryCount = 0;
   }
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class App extends React.Component {
     this.nextTitle();
   }
 
-  nextTitle() {
+  async nextTitle() {
     var variables = {
       id: Math.floor(Math.random() * 10000) + 1
     };
@@ -55,10 +55,20 @@ class App extends React.Component {
           variables: variables
         })
       };
-    
-    fetch(url, options).then(this.handleResponse)
-      .then(this.handleData)
-      .catch(this.handleError);
+      try {
+        const response = await fetch(url, options);
+        const data = await this.handleResponse(response);
+        this.handleData(data);
+        this.retryCount = 0;
+      } catch (e) {
+        if (this.retryCount <= 15) {
+          this.nextTitle();
+          this.retryCount += 1;
+        } else {
+          this.setState({ hasError: true });
+          this.retryCount = 0;
+        }
+      }
   }
 
   handleResponse(response) {
@@ -90,20 +100,13 @@ class App extends React.Component {
     })
   }
 
-  handleError(error) {
-    console.log(error);
-    this.nextTitle()
-  }
-
-  
-
   updateInputValue(evt) {
     this.setState({
       inputValue: evt.target.value
     });
   }
 
-compareTitles =(e) => {
+compareTitles = e => {
   e.preventDefault();
     this.setState({
       inputValue: this.state.inputValue
@@ -119,7 +122,7 @@ compareTitles =(e) => {
         color: colorRight,
         resultMessage: "Well Done, you guessed it!"
       })
-      setTimeout(function() {this.nextTitle()}.bind(this), 2000);      
+      setTimeout(function() {this.nextTitle()}.bind(this), 1500);      
     } else {
       console.log("you wrote it wrong")
       this.setState({
@@ -149,7 +152,7 @@ toggle() {
                 <i className="fas fa-angle-left"></i>
               </button>
               < div className = "loader" style={{ borderColor: this.state.color }} >
-                < div className = "gameImg" style = {image} > </div> 
+                < div className = "gameImg" style = {image} >{" "}</div> 
               </div >  
               <button id="next" onClick = {this.nextTitle} >
                 <i className="fas fa-angle-right"></i>
