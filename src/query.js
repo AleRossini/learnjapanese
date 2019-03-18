@@ -1,23 +1,20 @@
-var query = `
+import './index.css';
+import './App.css';
+
+var queryAnime = `
 query ($id: Int) {
-  Media (id: $id, type: ANIME) {
+  Media (id: $id, type: ANIME, format: TV) {
     id
     title {
       romaji
-      english
       native
     }
     coverImage {
       extraLarge
-      large
-      medium
-      color
     }
     isAdult
-    type
-    format
   }
 }
 `;
 
-export {query};
+export {queryAnime};

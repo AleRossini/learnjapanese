@@ -2,34 +2,37 @@ App {
   height: 1000px;
 }
 
-.fa-spin {
-  z-index: 1;
-  position: absolute;
-  top: 40%;
-  left: 47%;
-  font-size: xx-large;
-    color: darkgray;
-}
 
 section { 
     position: relative;
-    min-height: 400px;
+    min-height: 420px;
+    padding: 25px 0;
+}
+
+.fa-spin {
+  z-index: 1;
+  position: absolute;
+  top: 42%;
+  left: 48%;
+  font-size: xx-large;
+  color: darkgray;
 }
 
 
 .loader {
-  width: 200px;
-  height: 200px;  
-  border: 15px solid tomato;
+  width: 250px;
+  height: 250px;  
+  border: 15px solid transparent;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
   z-index: 2;
+  margin: 20px 0;
 }
 
 .gameImg {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   background-size: cover;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -37,10 +40,23 @@ section {
   
 }
 
-.collapse {
+.message {
+  height: 20px;
+  font-weight: 600;
+}
+
+#previous, .collapse {
   visibility: hidden;
 }
 
 .collapse.in {
   visibility: visible;
+}
+
+button#previous, button#next {
+  background-color: white;
+  border: none;
+  color: #1e1e1e;
+  box-shadow: none;
+  font-size: 40px;
 }

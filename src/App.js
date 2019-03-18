@@ -1,11 +1,10 @@
 import React, {
   Component
 } from 'react';
-// import logo from './logo.svg';
 import './index.css';
 import './App.css';
 import {
-  query
+  queryAnime
 } from './query.js';
 
 class App extends React.Component {
@@ -15,9 +14,13 @@ class App extends React.Component {
       title: '',
       titleRomaji: '',
       image: {},
+      color: '',
       inputValue: '',
       open: false,
-      hasError: false
+      isGoing: false,
+      type: '',
+      hasError: false,
+      resultMessage: ''
     }
     this.nextTitle = this.nextTitle.bind(this)
     this.handleResponse = this.handleResponse.bind(this)
@@ -32,12 +35,15 @@ class App extends React.Component {
 
   nextTitle() {
     var variables = {
-      id: Math.floor(Math.random() * 9000) + 1
+      id: Math.floor(Math.random() * 10000) + 1
     };
     this.setState({
-      open: false
+      open: false,
+      color: '',
+      inputValue: '',
+      resultMessage: ''
     });
-    var url = 'https://graphql.anilist.co',
+      var url = 'https://graphql.anilist.co',
       options = {
         method: 'POST',
         headers: {
@@ -45,10 +51,11 @@ class App extends React.Component {
           'Accept': 'application/json',
         },
         body: JSON.stringify({
-          query: query,
+          query: queryAnime,
           variables: variables
         })
       };
+    
     fetch(url, options).then(this.handleResponse)
       .then(this.handleData)
       .catch(this.handleError);
@@ -64,7 +71,7 @@ class App extends React.Component {
     var media = data.data.Media;
     var title = data.data.Media.title.native;
     var titleRomaji = data.data.Media.title.romaji;
-    var img = data.data.Media.coverImage.large;
+    var img = data.data.Media.coverImage.extraLarge;
     var isAdult = data.data.Media.isAdult;
     var fullEng = /^[a-zA-Z0-9$@$!%*?&#^-_. +]+$/;
 
@@ -84,12 +91,11 @@ class App extends React.Component {
   }
 
   handleError(error) {
-    // alert('Error, check console');
     console.log(error);
-    if (error === 404) {
-      this.nextTitle()
-    }
+    this.nextTitle()
   }
+
+  
 
   updateInputValue(evt) {
     this.setState({
@@ -104,16 +110,25 @@ compareTitles =(e) => {
     })
     const inputValue = this.state.inputValue;
     const titleNative = this.state.title;
+    const colorRight = 'limegreen';
+    const colorWrong = 'tomato';
     if (inputValue === titleNative) {
       console.log("you guessed it")
       this.setState({
-        inputValue: ''
+        inputValue: '',
+        color: colorRight,
+        resultMessage: "Well Done, you guessed it!"
       })
-      setTimeout(this.nextTitle(), 10000);      
+      setTimeout(function() {this.nextTitle()}.bind(this), 2000);      
     } else {
       console.log("you wrote it wrong")
+      this.setState({
+        color: colorWrong,
+        resultMessage: "That's wrong. Try again or skip to the next"
+      })
     }
 }
+
 
 toggle() {
   this.setState({
@@ -122,39 +137,36 @@ toggle() {
 }
 
   render() {
-    const {image,title,titleRomaji,open} = this.state;
-    console.log(open)
-    console.log(title)
+    const {image,title,titleRomaji,resultMessage} = this.state;
     return ( 
-    <section class="flex flex-column align-center justify-center">
-        <form >
-          <input type = "radio" name = "Anime" value = "Anime" /> Anime 
-          <input type = "radio" name = "Manga" value = "Manga" /> Manga 
-        </form>  
-        <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-        <div class="flex flex-row align-center">
+    <section className="flex flex-column align-center justify-center">
+    <h3>Can you guess this anime native title?</h3>
+        <i className="fa fa-cog fa-spin fa-3x fa-fw"></i>
+        <div className="flex flex-row align-center">
           {title && 
             ( < > 
-              < div class = "loader" >
-                < div class = "gameImg" style = {image} > </div> 
+              <button id="previous">
+                <i className="fas fa-angle-left"></i>
+              </button>
+              < div className = "loader" style={{ borderColor: this.state.color }} >
+                < div className = "gameImg" style = {image} > </div> 
               </div >  
-              <button onClick = {this.nextTitle} >
-              <i class="fas fa-angle-right"></i>
+              <button id="next" onClick = {this.nextTitle} >
+                <i className="fas fa-angle-right"></i>
               </button>               
               </ > )} 
-        </div> 
-        <form class="flex flex-row">
-            <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
-            <button onClick={(e) => this.compareTitles(e)}>Check</button>
-        </form>        
-        <div>
-        <button onClick={this.toggle.bind(this)} >
-          Need help?
-        </button>
-          <div className={"collapse" + (this.state.open ? ' in' : '')}>
-          The title in romaji is: {titleRomaji}
-          </div>
         </div>
+        <div className="message" style={{color: this.state.color}}>{resultMessage}</div>
+        <div className="flex flex-row wrap justify-center align-center">
+          <button onClick={this.toggle.bind(this)}>Help</button>   
+          <form className="flex flex-row wrap justify-center align-center">               
+              <input value={this.state.inputValue} onChange={evt => this.updateInputValue(evt)}/>
+              <button onClick={(e) => this.compareTitles(e)}>Check</button>
+          </form>     
+        </div>
+        <div className={"collapse" + (this.state.open ? ' in' : '')}>
+            The title in romaji is <b>{titleRomaji}</b>
+          </div>
     </section>
     )
   }

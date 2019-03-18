@@ -8,16 +8,81 @@ body, p {
   -moz-osx-font-smoothing: grayscale;
 }
 
-header, footer {
-  background-color: red;
+header {
+  -webkit-box-shadow: 0px 4px 15px 0px rgba(181,181,181,0.45);
+-moz-box-shadow: 0px 4px 15px 0px rgba(181,181,181,0.45);
+box-shadow: 0px 4px 15px 0px rgba(181,181,181,0.45);
+}
+
+footer {
+  background-color: tomato;
+  color: rgb(49, 49, 49);
+}
+
+header,footer {
+  padding: 15px 10px;
+}
+
+input {
+  background: transparent;
+    border: none;
+    border-bottom: 1px solid #383838;
+    font-size: 22px;
+    text-align: center;
+    color: #383838;
+}
+
+input,button,a {
+  padding: 10px 20px;
+  margin: 10px;
+}
+
+a,button {
+  -webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  -webkit-box-shadow: 0px 4px 7px 1px rgba(181,181,181,0.45);
+-moz-box-shadow: 0px 4px 7px 1px rgba(181,181,181,0.45);
+box-shadow: 0px 4px 7px 1px rgba(181,181,181,0.45);
+}
+
+a {
+  background-color: tomato;
+  color: white;
+  border: 2px solid transparent;
 }
 
 button {
-  background-color: tomato;
-  border: none;
-  cursor: pointer;
+  background-color: white;
+  border: 2px solid tomato;
+  color: #1e1e1e;
 }
 
+a:hover {
+  background-color: white;
+  color: #1e1e1e;
+  border: 2px solid tomato;
+}
+
+button:hover, button#previous:hover, button#next:hover {
+  background-color: tomato;
+  color: white;
+}
+
+h1 {
+  font-size: 25px;
+    margin: 10px 0 0 0;
+    font-family: 'Permanent Marker', cursive;
+}
+
+h2 {
+  font-size: 15px;
+  font-style: italic;
+  margin: 0;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -25,6 +90,7 @@ code {
 
 .max960 {
   max-width: 960px;
+  margin: auto;
 }
 
 .flex {
@@ -35,8 +101,8 @@ code {
   flex-wrap: wrap;
 }
 
-.no-wrap {
-  flex-wrap: wrap;
+.nowrap {
+  flex-wrap: nowrap;
 }
 
 .flex-row {
@@ -53,4 +119,30 @@ code {
 
 .justify-center {
   justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+#logo {
+  width: 60px;
+  height: 60px;
+  margin: 0 20px 0px 0px;
+}
+
+#anilist {
+  width: 20px;
+  height: 20px;
+}
+
+footer a, footer a:hover {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  margin: 0 5px;
+  padding: 0; 
 }

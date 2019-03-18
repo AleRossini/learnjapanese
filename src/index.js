@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import logo from './imgs/logo4.png';
+import anilist from './imgs/anilist.png';
 
 class Header extends React.Component {
   render() {
     return (
-        <header class="flex justify-center">
-          <div class="flex flex-row max960">
-            <h1>Learn Japanese with Anime</h1>
+        <header>
+          <div className="flex flex-row wrap max960 justify-between align-center">
+          <div className="flex flex-row wrap align-center justify-center">
+            <img id="logo" src={logo} alt="logo"/>
+            <h1>Japanese Boot Camp</h1>
+          </div>            
             <a href="https://www.tofugu.com/japanese/how-to-install-japanese-keyboard/" target="blank">Install Japanese keyboard</a>
           </div>          
         </header>
@@ -21,9 +26,14 @@ class Header extends React.Component {
 class Footer extends React.Component {
   render() {
     return (
-    <footer class="flex justify-center">
-      <div class="flex flex-row max960">
-      <h6>I'm a footer</h6>
+    <footer>
+      <div className="flex flex-row max960 justify-end">
+      <h5>
+        Game powered thanks to Anilist API
+        <a href="https://anilist.gitbook.io/anilist-apiv2-docs/" target="blank">
+          <img id="anilist" src={anilist} alt="anilist API"/>
+        </a>
+      </h5>
       </div>      
     </footer>
     )
